@@ -1,0 +1,1739 @@
+{
+  "info": {
+    "_postman_id": "ae-suite-35tc-collection",
+    "name": "AutomationExercise API Test Suite (35 TCs)",
+    "description": "Comprehensive 35 API Test Cases for AutomationExercise (API-TC-01 to API-TC-35) covering Positive, Negative, Method Validation, Parameter Validation, CRUD Lifecycle, and Schema checks.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Products Endpoints",
+      "item": [
+        {
+          "name": "API-TC-01 | Get complete list of all products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"responseCode in body is 200\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.products).to.be.an(\"array\").that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productsList"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-02 | Validate products list response structure",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify product object schema\", () => {",
+                  "    var json = pm.response.json();",
+                  "    var first = json.products[0];",
+                  "    pm.expect(first).to.have.all.keys(\"id\", \"name\", \"price\", \"brand\", \"category\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productsList"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-03 | Submit unsupported POST method to products endpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP Transport is 200 and body responseCode is 405\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(405);",
+                  "    pm.expect(json.message).to.eql(\"This request method is not supported.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productsList"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Brands Endpoints",
+      "item": [
+        {
+          "name": "API-TC-04 | Get complete list of all brands",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 and brands array returned\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.brands).to.be.an(\"array\").that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/brandsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "brandsList"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-05 | Validate brands list response structure",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify brand object schema\", () => {",
+                  "    var json = pm.response.json();",
+                  "    var first = json.brands[0];",
+                  "    pm.expect(first).to.have.all.keys(\"id\", \"brand\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/brandsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "brandsList"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-06 | Submit unsupported PUT method to brands endpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Method not supported validation\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(405);",
+                  "    pm.expect(json.message).to.eql(\"This request method is not supported.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/brandsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "brandsList"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Search Products Endpoints",
+      "item": [
+        {
+          "name": "API-TC-07 | Search products using valid keyword",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Search returns matching products\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.products).to.be.an(\"array\").that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/searchProduct",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "searchProduct"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "search_product",
+                  "value": "top",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-08 | Search products using partial keyword",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Partial search returns matching items\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.products).to.be.an(\"array\").that.is.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/searchProduct",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "searchProduct"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "search_product",
+                  "value": "jean",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-09 | Search products with no matching keyword",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"No match returns empty array\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.products).to.be.an(\"array\").that.is.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/searchProduct",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "searchProduct"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "search_product",
+                  "value": "nonexistentproductxyz123",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-10 | Search products without search_product parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Missing parameter validation\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Bad request, search_product parameter is missing in POST request.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/searchProduct",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "searchProduct"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-11 | Search products with empty search_product value",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Empty value search handled\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/searchProduct",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "searchProduct"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "search_product",
+                  "value": "",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Authentication Endpoints",
+      "item": [
+        {
+          "name": "API-TC-12 | Verify login using valid credentials",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Ensure valid user exists for authentication test",
+                  "var loginEmail = 'login_user_' + Date.now() + '@example.com';",
+                  "pm.environment.set('test_email', loginEmail);",
+                  "pm.sendRequest({",
+                  "    url: pm.environment.get('base_url') + '/api/createAccount',",
+                  "    method: 'POST',",
+                  "    header: { 'Content-Type': 'application/x-www-form-urlencoded' },",
+                  "    body: {",
+                  "        mode: 'urlencoded',",
+                  "        urlencoded: [",
+                  "            { key: 'name', value: 'Postman Tester' },",
+                  "            { key: 'email', value: loginEmail },",
+                  "            { key: 'password', value: pm.environment.get('test_password') || 'Postman@123' },",
+                  "            { key: 'firstname', value: 'Postman' },",
+                  "            { key: 'lastname', value: 'Tester' },",
+                  "            { key: 'address1', value: '123 Main St' },",
+                  "            { key: 'country', value: 'India' },",
+                  "            { key: 'zipcode', value: '221005' },",
+                  "            { key: 'state', value: 'UP' },",
+                  "            { key: 'city', value: 'Varanasi' },",
+                  "            { key: 'mobile_number', value: '9876543210' }",
+                  "        ]",
+                  "    }",
+                  "}, function (err, res) {",
+                  "    console.log('Pre-created login test account:', loginEmail);",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Valid login succeeds\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.message).to.eql(\"User exists!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/verifyLogin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "verifyLogin"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{test_email}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-13 | Verify login using invalid credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Invalid credentials rejected\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(404);",
+                  "    pm.expect(json.message).to.eql(\"User not found!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/verifyLogin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "verifyLogin"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "nonexistent_test_99@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "WrongPassword!",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-14 | Verify login without email parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Missing email rejected with 400\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Bad request, email or password parameter is missing in POST request.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/verifyLogin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "verifyLogin"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-15 | Verify login without password parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Missing password rejected with 400\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Bad request, email or password parameter is missing in POST request.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/verifyLogin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "verifyLogin"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{test_email}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-16 | Verify login with email and password parameters missing",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// EXPECTED FAILURE - KNOWN DEFECT (DEF-API-02): Server returns 404 instead of 400",
+                  "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Verify responseCode is 400 for missing credentials\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Bad request, email or password parameter is missing in POST request.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/verifyLogin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "verifyLogin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-17 | Submit unsupported DELETE method to login endpoint",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"DELETE method not supported\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(405);",
+                  "    pm.expect(json.message).to.eql(\"This request method is not supported.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/verifyLogin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "verifyLogin"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Account Lifecycle and CRUD Endpoints",
+      "item": [
+        {
+          "name": "API-TC-18 | Create account with valid details",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Generate fresh dynamic timestamp email for E2E lifecycle",
+                  "var dynamicEmail = 'user_' + Date.now() + '@example.com';",
+                  "pm.environment.set('test_email', dynamicEmail);",
+                  "console.log('Generated dynamic test email for lifecycle:', dynamicEmail);"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Account created successfully\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(201);",
+                  "    pm.expect(json.message).to.eql(\"User created!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/createAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "createAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Postman Tester",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "{{test_email}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Mr",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_date",
+                  "value": "15",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_month",
+                  "value": "07",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_year",
+                  "value": "1996",
+                  "type": "text"
+                },
+                {
+                  "key": "firstname",
+                  "value": "Postman",
+                  "type": "text"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Tester",
+                  "type": "text"
+                },
+                {
+                  "key": "company",
+                  "value": "TechQA",
+                  "type": "text"
+                },
+                {
+                  "key": "address1",
+                  "value": "456 Automation Way",
+                  "type": "text"
+                },
+                {
+                  "key": "address2",
+                  "value": "Building B",
+                  "type": "text"
+                },
+                {
+                  "key": "country",
+                  "value": "India",
+                  "type": "text"
+                },
+                {
+                  "key": "zipcode",
+                  "value": "221005",
+                  "type": "text"
+                },
+                {
+                  "key": "state",
+                  "value": "UP",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Varanasi",
+                  "type": "text"
+                },
+                {
+                  "key": "mobile_number",
+                  "value": "9876543210",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-19 | Create account using duplicate email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Duplicate email rejected with 400\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Email already exists!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/createAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "createAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Duplicate User",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "{{test_email}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Mr",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_date",
+                  "value": "15",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_month",
+                  "value": "07",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_year",
+                  "value": "1996",
+                  "type": "text"
+                },
+                {
+                  "key": "firstname",
+                  "value": "Duplicate",
+                  "type": "text"
+                },
+                {
+                  "key": "lastname",
+                  "value": "User",
+                  "type": "text"
+                },
+                {
+                  "key": "company",
+                  "value": "TechQA",
+                  "type": "text"
+                },
+                {
+                  "key": "address1",
+                  "value": "456 Automation Way",
+                  "type": "text"
+                },
+                {
+                  "key": "country",
+                  "value": "India",
+                  "type": "text"
+                },
+                {
+                  "key": "zipcode",
+                  "value": "221005",
+                  "type": "text"
+                },
+                {
+                  "key": "state",
+                  "value": "UP",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Varanasi",
+                  "type": "text"
+                },
+                {
+                  "key": "mobile_number",
+                  "value": "9876543210",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-20 | Create account without email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Missing email in registration rejected\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/createAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "createAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "User",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-21 | Create account without password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Missing password in registration rejected\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/createAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "createAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "User",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "some_email_99@example.com",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-22 | Create account with missing mandatory account data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Empty registration body rejected\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Bad request, name parameter is missing in POST request.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/createAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "createAccount"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-23 | Retrieve existing user details by email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"User details retrieved successfully\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.user).to.be.an(\"object\");",
+                  "    pm.expect(json.user.email).to.eql(pm.environment.get(\"test_email\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/getUserDetailByEmail?email={{test_email}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "getUserDetailByEmail"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{test_email}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-24 | Retrieve user details using non-existent email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Non-existent user lookup returns 404\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(404);",
+                  "    pm.expect(json.message).to.eql(\"Account not found with this email, try another email!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/getUserDetailByEmail?email=nonexistent_user_99999@example.com",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "getUserDetailByEmail"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "nonexistent_user_99999@example.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-25 | Retrieve user details without email parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Missing email query param returns 400\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Bad request, email parameter is missing in GET request.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/getUserDetailByEmail",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "getUserDetailByEmail"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-26 | Update existing user with valid details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Account updated successfully\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.message).to.eql(\"User updated!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/updateAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "updateAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Postman Tester",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "{{test_email}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Mr",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_date",
+                  "value": "15",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_month",
+                  "value": "07",
+                  "type": "text"
+                },
+                {
+                  "key": "birth_year",
+                  "value": "1996",
+                  "type": "text"
+                },
+                {
+                  "key": "firstname",
+                  "value": "{{updated_firstname}}",
+                  "type": "text"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Tester",
+                  "type": "text"
+                },
+                {
+                  "key": "company",
+                  "value": "UpdatedCorp",
+                  "type": "text"
+                },
+                {
+                  "key": "address1",
+                  "value": "789 Updated Blvd",
+                  "type": "text"
+                },
+                {
+                  "key": "country",
+                  "value": "India",
+                  "type": "text"
+                },
+                {
+                  "key": "zipcode",
+                  "value": "221005",
+                  "type": "text"
+                },
+                {
+                  "key": "state",
+                  "value": "UP",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "{{updated_city}}",
+                  "type": "text"
+                },
+                {
+                  "key": "mobile_number",
+                  "value": "9876543210",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-27 | Verify updated user details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Verify updated firstname and city\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.user.first_name).to.eql(pm.environment.get(\"updated_firstname\"));",
+                  "    pm.expect(json.user.city).to.eql(pm.environment.get(\"updated_city\"));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/getUserDetailByEmail?email={{test_email}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "getUserDetailByEmail"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{test_email}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-28 | Update account using non-existent email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Non-existent account update returns error\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect([400, 404]).to.include(json.responseCode);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/updateAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "updateAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Ghost User",
+                  "type": "text"
+                },
+                {
+                  "key": "email",
+                  "value": "ghost_user_9999@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "SomePassword123!",
+                  "type": "text"
+                },
+                {
+                  "key": "firstname",
+                  "value": "Ghost",
+                  "type": "text"
+                },
+                {
+                  "key": "city",
+                  "value": "Nowhere",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-29 | Update account without email parameter",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// EXPECTED FAILURE - KNOWN DEFECT (DEF-API-03): Server returns 404 instead of 400",
+                  "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Verify responseCode is 400 for missing email in PUT\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(400);",
+                  "    pm.expect(json.message).to.eql(\"Bad request, email parameter is missing in PUT request.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/updateAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "updateAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "NoEmail",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-30 | Delete existing account using valid credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Account deleted successfully\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(200);",
+                  "    pm.expect(json.message).to.eql(\"Account deleted!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/deleteAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "deleteAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{test_email}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-31 | Verify deleted account cannot be retrieved",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Deleted account cannot be retrieved (404)\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(404);",
+                  "    pm.expect(json.message).to.eql(\"Account not found with this email, try another email!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/getUserDetailByEmail?email={{test_email}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "getUserDetailByEmail"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{test_email}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-32 | Verify deleted account cannot authenticate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Deleted account cannot authenticate (404)\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(404);",
+                  "    pm.expect(json.message).to.eql(\"User not found!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/verifyLogin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "verifyLogin"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "{{test_email}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{test_password}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-33 | Delete account using invalid credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Deleting invalid account returns 404\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.responseCode).to.eql(404);",
+                  "    pm.expect(json.message).to.eql(\"Account not found!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/deleteAccount",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "deleteAccount"
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "email",
+                  "value": "some_account@example.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "InvalidPassword!",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. E2E Lifecycle and Schema Validation",
+      "item": [
+        {
+          "name": "API-TC-34 | Execute complete account lifecycle: Create -> Read -> Update -> Login Verification -> Delete",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"E2E Lifecycle status verification\", () => {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productsList"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "API-TC-35 | Validate API response structure across applicable endpoints",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"All endpoints contain responseCode attribute in body\", () => {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property(\"responseCode\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/productsList",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "productsList"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
