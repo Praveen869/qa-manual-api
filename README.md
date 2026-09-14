@@ -3,7 +3,7 @@
 ![Postman](https://img.shields.io/badge/Postman-v10%2Fv11-FF6C37?style=flat&logo=postman&logoColor=white)
 ![Test Cases](https://img.shields.io/badge/Test%20Cases-35%20Total-blue)
 ![Execution Status](https://img.shields.io/badge/Pass%20Rate-100%25-brightgreen)
-![Defects](https://img.shields.io/badge/Defects%20Logged-3-orange)
+![Defects](https://img.shields.io/badge/Defects-1%20Open%20%7C%202%20Closed-orange)
 ![Type](https://img.shields.io/badge/Type-Manual%20API%20Testing-orange)
 
 A comprehensive, industry-standard **Manual API Testing** portfolio project targeting the [Automation Exercise REST API](https://www.automationexercise.com/api_list). The project demonstrates end-to-end QA practices including requirements analysis, test planning, scenario design, Postman client execution, boundary validation, and professional defect reporting.
@@ -29,12 +29,14 @@ The objective of this project is to validate the business logic, input validatio
                      API TEST EXECUTION DASHBOARD
 ======================================================================
   Total Test Cases Planned & Executed   :  35  (100.0%)
-  Total Postman Assertions Verified     :  38  (100.0%)
-  Passed Test Cases / Assertions        :  35 / 38 (100.0%)
+  Passed Test Cases                     :  35  (100.0%)
   Failed Test Cases                     :  0   (  0.0%)
+  Passed Postman Assertions             :  38 / 38 (100.0%)
 ----------------------------------------------------------------------
-  Defects Logged                        :  3   [DEF-API-01, DEF-API-02, DEF-API-03]
-  Observations Logged                   :  2   [OBS-API-01, 02]
+  Total Defects Logged                  :  3   (1 Open, 2 Closed)
+  Open Defects                          :  1   [DEF-API-01 (Protocol Discrepancy)]
+  Resolved / Closed Defects             :  2   [DEF-API-02, DEF-API-03]
+  Observations Logged                   :  2   [OBS-API-01, OBS-API-02]
   Transport Status Code Discrepancies   :  20 TCs across 8 Endpoints
 ======================================================================
 ```
@@ -45,11 +47,11 @@ The objective of this project is to validate the business logic, input validatio
 
 ## 3. Defect Summary
 
-| Defect ID | Severity | Category | Target | Summary Description |
-| :--- | :---: | :---: | :---: | :--- |
-| **DEF-API-01** | Medium | Protocol Consistency | 20 TCs across 8 Endpoints | **HTTP Transport Status Code vs API responseCode Consistency Issue**: Server returns wire `HTTP 200 OK` while embedding error/creation codes (`201`, `400`, `404`, `405`) in JSON body. |
-| **DEF-API-02** | Medium | Validation Error Handling | `API-TC-16` | **Missing Credentials in Login Returns 404 Instead of 400**: Empty request body returns `responseCode: 404` (`"User not found!"`) instead of `400 Bad Request`. |
-| **DEF-API-03** | Medium | Validation Error Handling | `API-TC-29` | **Missing Email in Account Update Returns 404 Instead of 400**: Omitting mandatory `email` returns `responseCode: 404` (`"Account not found!"`) instead of `400 Bad Request`. |
+| Defect ID | Severity | Category | Target | Summary Description | Lifecycle Status |
+| :--- | :---: | :---: | :---: | :--- | :---: |
+| **DEF-API-01** | Medium | Protocol Consistency | 20 TCs across 8 Endpoints | **HTTP Transport Status Code vs API responseCode Consistency Issue**: Server returns wire `HTTP 200 OK` while embedding error/creation codes (`201`, `400`, `404`, `405`) in JSON body. | **Open / Active** |
+| **DEF-API-02** | Medium | Validation Error Handling | `API-TC-16` | **Missing Credentials in Login**: Previous run returned 404; retested and verified returning `400 Bad Request` in latest execution. | **Closed / Verified** |
+| **DEF-API-03** | Medium | Validation Error Handling | `API-TC-29` | **Missing Email in Account Update**: Previous run returned 404; retested and verified returning `400 Bad Request` in latest execution. | **Closed / Verified** |
 
 ### Key Observations
 * **OBS-API-01 (Payload Serialization):** The API requires form-encoded parameters (`application/x-www-form-urlencoded` or `multipart/form-data`). Raw JSON bodies are not parsed by the server.
@@ -92,12 +94,14 @@ qa-manual-api/
 │   └── API_Execution_Report.xlsx           # Detailed execution log with status, codes & latencies
 │
 ├── 07-Defects/
-│   ├── API_Defect_Report.md                # Formatted defect log (DEF-01, 02, 03 and OBS-01)
+│   ├── API_Defect_Report.md                # Formatted defect log (DEF-01 Open, DEF-02/03 Closed)
 │   └── API_Defect_Report.xlsx              # Excel defect tracking sheet
 │
 ├── 08-Evidence/
 │   └── execution-evidence/
-│       └── EVIDENCE_MAPPING.md             # Evidence mapping guide and payload verification
+│       ├── EVIDENCE_MAPPING.md             # Evidence mapping guide and payload verification
+│       ├── postman_runner_summary.png      # Collection runner summary screenshot
+│       └── postman_request_headers_evidence.png # Live request/response header evidence
 │
 ├── 09-Test-Closure/
 │   └── API_Test_Closure_Report.md          # Project test closure, metrics, and conclusion
@@ -117,7 +121,7 @@ qa-manual-api/
 3. **Execute Requests:**
    * Run individual requests manually to inspect request/response payloads, or use **Collection Runner** to execute the entire 35-TC suite sequentially.
 4. **Inspect Assertions:**
-   * Review the **Test Results** tab in Postman to observe passing assertions and the two expected test failures (`API-TC-16` and `API-TC-29`).
+   * Review the **Test Results** tab in Postman to observe 100% passing assertions across all 35 test scenarios.
 
 ---
 
@@ -127,4 +131,4 @@ qa-manual-api/
 * **Protocol & Status Code Separation:** Distinguishing transport status (`HTTP 200`) from payload application status (`responseCode`).
 * **CRUD Lifecycle State Tracking:** Designing interdependent sequential test cases while maintaining test isolation.
 * **Negative & Boundary Testing:** Testing empty strings, omitted keys, duplicate values, and unsupported HTTP verbs.
-* **Standardized Defect Logging:** Clear reproduction steps, severity assignment, and root cause analysis.
+* **Standardized Defect Logging & Teardown:** Full defect lifecycle management (Open vs Closed/Verified defects upon retest).

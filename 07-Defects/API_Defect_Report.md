@@ -1,17 +1,17 @@
 # API Defect Report — AutomationExercise
 
 ## Executive Summary
-This document provides a detailed breakdown of all defects, protocol anomalies, and observation logs discovered during the execution of the 35 API test cases against the **AutomationExercise REST API**.
+This document provides a detailed breakdown of all defects, protocol anomalies, defect lifecycle states (Open vs Closed), and observation logs for the **AutomationExercise REST API**.
 
 ---
 
 ## Defect Summary Table
 
-| Defect ID | Severity | Category | Target Endpoint / TCs | Summary Description | Status |
+| Defect ID | Severity | Category | Target Endpoint / TCs | Summary Description | Lifecycle Status |
 | :--- | :---: | :---: | :---: | :--- | :---: |
-| **DEF-API-01** | Medium | Protocol Consistency | 20 TCs across 8 Endpoints | **HTTP Transport Status Code vs Payload Consistency Issue**: Server returns wire status `HTTP 200 OK` while embedding application status codes (`201`, `400`, `404`, `405`) inside the JSON response body. | Open / Reported |
-| **DEF-API-02** | Medium | Validation Error Handling | `API-TC-16` (`POST /api/verifyLogin`) | **Missing Credentials in Login Returns 404 Instead of 400**: Sending empty request body returns `responseCode: 404` (`"User not found!"`) instead of `400 Bad Request`. | Open / Reported |
-| **DEF-API-03** | Medium | Validation Error Handling | `API-TC-29` (`PUT /api/updateAccount`) | **Missing Email in Account Update Returns 404 Instead of 400**: Omitting mandatory `email` field returns `responseCode: 404` (`"Account not found!"`) instead of `400 Bad Request`. | Open / Reported |
+| **DEF-API-01** | Medium | Protocol Consistency | 20 TCs across 8 Endpoints | **HTTP Transport Status Code vs Payload Consistency Issue**: Server returns wire status `HTTP 200 OK` while embedding application status codes (`201`, `400`, `404`, `405`) inside the JSON response body. | **Open / Active** |
+| **DEF-API-02** | Medium | Validation Error Handling | `API-TC-16` (`POST /api/verifyLogin`) | **Missing Credentials in Login**: Previous run logged 404; retested and verified returning expected `400 Bad Request` payload in latest execution. | **Closed / Verified** |
+| **DEF-API-03** | Medium | Validation Error Handling | `API-TC-29` (`PUT /api/updateAccount`) | **Missing Email in Account Update**: Previous run logged 404; retested and verified returning expected `400 Bad Request` payload in latest execution. | **Closed / Verified** |
 
 ---
 
@@ -20,6 +20,7 @@ This document provides a detailed breakdown of all defects, protocol anomalies, 
 ### DEF-API-01: HTTP Transport Status Code vs API `responseCode` Discrepancy
 * **Severity:** Medium
 * **Priority:** High
+* **Status:** **Open / Active**
 * **Component:** Global API Transport Layer
 * **Affected Scenarios:** 20 Test Cases across 8 Endpoints
 * **Description:** 
@@ -29,33 +30,23 @@ This document provides a detailed breakdown of all defects, protocol anomalies, 
 
 ---
 
-### DEF-API-02: Missing Credentials in Login Returns `404` Instead of `400`
+### DEF-API-02: Missing Credentials in Login Verification Returns 404 Instead of 400
 * **Severity:** Medium
 * **Priority:** Medium
+* **Status:** **Closed / Verified** (Retested & Verified in latest run)
 * **Target:** `POST /api/verifyLogin` (`API-TC-16`)
 * **Preconditions:** Valid endpoint URI.
-* **Steps to Reproduce:**
-  1. Trigger `POST https://automationexercise.com/api/verifyLogin` with an empty request body (no `email` and no `password` parameters).
-  2. Inspect the JSON response payload.
-* **Expected Result:**
-  Response should be `responseCode: 400` with message `"Bad request, email or password parameter is missing in POST request."`
-* **Actual Result:**
-  Server returns `responseCode: 404` with message `"User not found!"`.
+* **Retest Note:** Previous execution logged `responseCode: 404` (`"User not found!"`). Retest with form-encoded request body verified expected `responseCode: 400` (`"Bad request, email or password parameter is missing in POST request."`). Marked **Closed**.
 
 ---
 
-### DEF-API-03: Missing Email in Account Update Returns `404` Instead of `400`
+### DEF-API-03: Missing Email in Account Update Returns 404 Instead of 400
 * **Severity:** Medium
 * **Priority:** Medium
+* **Status:** **Closed / Verified** (Retested & Verified in latest run)
 * **Target:** `PUT /api/updateAccount` (`API-TC-29`)
 * **Preconditions:** Valid user session / updated fields available.
-* **Steps to Reproduce:**
-  1. Trigger `PUT https://automationexercise.com/api/updateAccount` with body parameters (`name`, `city`, `password`) but **omit** the mandatory `email` parameter.
-  2. Inspect the JSON response payload.
-* **Expected Result:**
-  Server should return `responseCode: 400` indicating missing mandatory identifier parameter `email`.
-* **Actual Result:**
-  Server returns `responseCode: 404` with message `"Account not found!"`.
+* **Retest Note:** Previous execution logged `responseCode: 404` (`"Account not found!"`). Retest with form-encoded request body verified expected `responseCode: 400` (`"Bad request, email parameter is missing in PUT request."`). Marked **Closed**.
 
 ---
 
