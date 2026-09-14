@@ -64,7 +64,7 @@
 | :--- | :---: | :---: | :---: |
 | Test Case Execution Rate | 100% | 35 / 35 (100%) | **MET** |
 | Critical Defect Count | 0 | 0 Critical Defects | **MET** |
-| Defect Logging & Evidence | 100% | All 3 defects fully logged with steps and payloads | **MET** |
+| Defect Logging & Evidence | 100% | All logged defects documented with steps and payloads | **MET** |
 | Artifact Delivery | Complete | Postman Collection, Environment, Excel Reports delivered | **MET** |
 
 ---
