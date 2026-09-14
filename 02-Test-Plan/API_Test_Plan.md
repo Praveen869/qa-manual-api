@@ -2,7 +2,7 @@
 
 ## 1. Document Control
 * **Project Name:** AutomationExercise Manual API Testing Project
-* **Author:** QA Engineering
+* **Author:** Praveen Kumar Dwivedi
 * **Document Version:** 1.0 (Final)
 * **Date:** 2026-09-14
 * **Testing Type:** Manual API Testing (Using Postman Client)
@@ -56,8 +56,8 @@ Testing is conducted manually using Postman to construct and trigger HTTP reques
 * **Operating System:** Cross-platform (Windows / macOS / Linux)
 * **Environment Variables:**
   * `{{base_url}}`: `https://automationexercise.com`
-  * `{{test_email}}`: Dynamic unique test email (`postman_run_user_<timestamp>@example.com`)
-  * `{{test_password}}`: Strong test password (`PostmanPass123!`)
+  * `{{test_email}}`: Test account email for lifecycle execution (default: `postman_test_user@example.com`; overridden at runtime by pre-request script in lifecycle requests)
+  * `{{test_password}}`: Test account password (`Postman@123`)
   * `{{updated_firstname}}`: `PostmanUpdated`
   * `{{updated_city}}`: `San Francisco`
 

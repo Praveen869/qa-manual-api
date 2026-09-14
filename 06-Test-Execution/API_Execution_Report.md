@@ -38,8 +38,8 @@
 | **Brands Catalog** | 3 | 3 | 0 | Brand retrieval, schema integrity, and method constraints (`PUT`) verified. |
 | **Product Search** | 5 | 5 | 0 | Keyword search and parameter checks pass; empty query acts as wildcard. |
 | **Authentication & Login** | 6 | 6 | 0 | All authentication scenarios pass (`API-TC-16` verified with `400 Bad Request`). |
-| **Account Lifecycle (CRUD)** | 17 | 17 | 0 | Full CRUD state chain verified (`API-TC-29` verified with `400 Bad Request`). |
-| **End-to-End Integration** | 1 | 1 | 0 | Full state chain verified: Create -> Read -> Update -> Read -> Login -> Teardown. |
+| **Account Lifecycle (CRUD)** | 16 | 16 | 0 | Full CRUD state chain verified (`API-TC-29` verified with `400 Bad Request`). |
+| **End-to-End Integration & Schema** | 2 | 2 | 0 | Full lifecycle state transition (TC-34) and JSON envelope schema consistency (TC-35) validated. |
 
 ---
 

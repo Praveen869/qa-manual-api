@@ -22,6 +22,7 @@
    * **Parameters:** None.
    * **Documented Response:** Status `405 Method Not Supported`.
    * **Documented Body:** `responseCode: 405`, `message: "This request method is not supported."`
+   * > **Observed Behavior (DEF-API-01):** Server returns wire `HTTP 200 OK` at the transport layer; the documented `405` status is embedded inside `responseCode` in the JSON response body. This transport-vs-body discrepancy applies across all error and mutation endpoints. See [DEF-API-01](../07-Defects/API_Defect_Report.md).
 
 ### 2.2 Brands Module
 3. **GET `/api/brandsList`**
@@ -109,8 +110,8 @@ To validate end-to-end transactional integrity, the system must support an unint
 
 | Feature / Behavior | Documented Requirement | Observed Execution Behavior | Classification |
 | :--- | :--- | :--- | :--- |
-| **HTTP Transport Status Code** | Endpoints return distinct HTTP codes (`201`, `400`, `404`, `405`). | Server consistently returns wire status `HTTP 200 OK`; the documented status is embedded inside JSON `responseCode`. | **DEF-API-01** |
-| **Empty Login Body** (`API-TC-16`) | Missing credentials should trigger missing parameter validation (`400 Bad Request`). | Server bypassed parameter check and returned `responseCode: 404` (`"User not found!"`). | **DEF-API-02** |
-| **Missing Email in Update** (`API-TC-29`) | Missing mandatory identifier `email` should trigger validation error (`400 Bad Request`). | Server returned `responseCode: 404` (`"Account not found!"`). | **DEF-API-03** |
+| **HTTP Transport Status Code** | Endpoints return distinct HTTP codes (`201`, `400`, `404`, `405`). | Server consistently returns wire status `HTTP 200 OK`; the documented status is embedded inside JSON `responseCode`. | **DEF-API-01 — Open / Active** |
+| **Empty Login Body** (`API-TC-16`) | Missing credentials should trigger missing parameter validation (`400 Bad Request`). | Initially observed `responseCode: 404` (`"User not found!"`); retested and verified returning expected `responseCode: 400` (`"Bad request, email or password parameter is missing in POST request."`). | **DEF-API-02 — Closed / Verified** |
+| **Missing Email in Update** (`API-TC-29`) | Missing mandatory identifier `email` should trigger validation error (`400 Bad Request`). | Initially observed `responseCode: 404` (`"Account not found!"`); retested and verified returning expected `responseCode: 400` (`"Bad request, email parameter is missing in PUT request."`). | **DEF-API-03 — Closed / Verified** |
 | **Request Payload Encoding** | Documented as general request parameters. | Only `application/x-www-form-urlencoded` and `multipart/form-data` are accepted; raw JSON bodies fail to parse. | **OBS-API-01** |
 | **Empty Search String** (`API-TC-11`) | Not explicitly specified in documentation. | Passing `search_product=""` acts as a wildcard returning all products rather than an error. | **Observation / Ambiguity** |
