@@ -3,7 +3,7 @@
 ![Postman](https://img.shields.io/badge/Postman-v10%2Fv11-FF6C37?style=flat&logo=postman&logoColor=white)
 ![Test Cases](https://img.shields.io/badge/Test%20Cases-35%20Total-blue)
 ![Execution Status](https://img.shields.io/badge/Pass%20Rate-100%25-brightgreen)
-![Defects](https://img.shields.io/badge/Defects%20Logged-1-orange)
+![Defects](https://img.shields.io/badge/Defects%20Logged-3-orange)
 ![Type](https://img.shields.io/badge/Type-Manual%20API%20Testing-orange)
 
 A comprehensive, industry-standard **Manual API Testing** portfolio project targeting the [Automation Exercise REST API](https://www.automationexercise.com/api_list). The project demonstrates end-to-end QA practices including requirements analysis, test planning, scenario design, Postman client execution, boundary validation, and professional defect reporting.
@@ -33,7 +33,7 @@ The objective of this project is to validate the business logic, input validatio
   Passed Test Cases / Assertions        :  35 / 38 (100.0%)
   Failed Test Cases                     :  0   (  0.0%)
 ----------------------------------------------------------------------
-  Defects Logged                        :  1   [DEF-API-01 (Protocol Discrepancy)]
+  Defects Logged                        :  3   [DEF-API-01, DEF-API-02, DEF-API-03]
   Observations Logged                   :  2   [OBS-API-01, 02]
   Transport Status Code Discrepancies   :  20 TCs across 8 Endpoints
 ======================================================================

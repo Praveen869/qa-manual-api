@@ -18,7 +18,7 @@
 * **Total Executed:** 35 / 35 (100% Test Execution Coverage)
 * **Passed Scenarios:** 35 (Met functional contract & business requirements)
 * **Failed Scenarios:** 0
-* **Total Defects Logged:** 1 (`DEF-API-01` Protocol Transport Code Discrepancy)
+* **Total Defects Logged:** 3 (`DEF-API-01`, `DEF-API-02`, `DEF-API-03`)
 * **Total Observations Logged:** 2 (`OBS-API-01`, `OBS-API-02`)
 
 ---

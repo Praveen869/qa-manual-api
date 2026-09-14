@@ -20,7 +20,7 @@
   Passed Test Cases / Assertions        :  35 / 38 (100.0%)
   Failed Test Cases                     :  0   (  0.0%)
 ----------------------------------------------------------------------
-  Defects Logged                        :  1   [DEF-API-01 (Protocol Discrepancy)]
+  Defects Logged                        :  3   [DEF-API-01, DEF-API-02, DEF-API-03]
   Observations Logged                   :  2   [OBS-API-01, 02]
   Transport Status Code Discrepancies   :  20 TCs across 8 Endpoints
 ======================================================================
